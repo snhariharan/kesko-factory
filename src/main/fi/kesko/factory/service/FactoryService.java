@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FactoryService {
+    private Integer boxCount = 0;
+    private Integer packCount = 0;
+    private Integer barCount = 0;
+    private Float totalPrice = 0f;
 
     public CheapestCombination getCheapestPriceCombo(CustomerRequest customerRequest) {
-        Integer boxCount = 0;
-        Integer packCount = 0;
-        Integer barCount = 0;
-        Float totalPrice = 0.0f;
         Integer remaining = customerRequest.getCount();
         Integer boxSize = customerRequest.getBoxSize();
         Integer packSize = customerRequest.getPackSize();
