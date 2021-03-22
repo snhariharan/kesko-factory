@@ -31,4 +31,14 @@ public class CheapestCombination {
     public Float getTotalPrice() {
         return totalPrice;
     }
+
+    @Override
+    public String toString() {
+        return "CheapestCombination{" +
+                "boxCount=" + boxCount +
+                ", packCount=" + packCount +
+                ", barCount=" + barCount +
+                ", totalPrice=" + totalPrice +
+                '}';
+    }
 }
