@@ -9,27 +9,29 @@ public class FactoryService {
     private Integer boxCount = 0;
     private Integer packCount = 0;
     private Integer barCount = 0;
-    private Float totalPrice = 0f;
 
-    public CheapestCombination getCheapestPriceCombo(CustomerRequest customerRequest) {
-        Integer remaining = customerRequest.getCount();
-        Integer boxSize = customerRequest.getBoxSize();
-        Integer packSize = customerRequest.getPackSize();
-        do {
-            if (remaining > boxSize) {
-                boxCount = remaining / boxSize;
-                remaining = remaining % boxSize;
-                totalPrice += boxCount * customerRequest.getBoxPrice();
-            } else if (remaining > packSize) {
-                packCount = remaining / packSize;
-                remaining = remaining % packSize;
-                totalPrice += packCount * customerRequest.getPackPrice();
-            } else {
-                barCount = remaining;
-                remaining = 0;
-                totalPrice += barCount * customerRequest.getBarPrice();
-            }
-        } while (remaining > 0);
+    public CheapestCombination getCheapestPriceCombo(CustomerRequest request) {
+        Integer boxSize = request.getBoxSize();
+        Integer packSize = request.getPackSize();
+        getTotalCounts(request.getCount(), boxSize, packSize);
+        Float totalPrice = (boxCount * request.getBoxPrice())
+                + (packCount * request.getPackPrice())
+                + (barCount * request.getBarPrice());
         return new CheapestCombination(boxCount, packCount, barCount, totalPrice);
+    }
+
+    private void getTotalCounts(Integer counter, Integer boxSize, Integer packSize) {
+        do {
+            if (counter > boxSize) {
+                boxCount = counter / boxSize;
+                counter %= boxSize;
+            } else if (counter > packSize) {
+                packCount = counter / packSize;
+                counter %= packSize;
+            } else {
+                barCount = counter;
+                break;
+            }
+        } while (counter > 0);
     }
 }
